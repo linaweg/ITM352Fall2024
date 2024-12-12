@@ -1,0 +1,32 @@
+{
+    "How was Columbus' ship called in 1492?": {
+        "options": {"A": "Santa Maria", "B": "Santa Nina", "C": "Santa Pinta", "D": "Santa Johann"},
+        "correct": "A",
+        "hint": "The name sounds religious."
+    },
+    "What is 2 + 2?": {
+        "options": {"A": "3", "B": "4", "C": "5", "D": "6"},
+        "correct": "B",
+        "hint": "It's an even number."
+    },
+    "What is the capital of Florida?": {
+        "options": {"A": "Miami", "B": "Tallahassee", "C": "Orlando", "D": "Berlin"},
+        "correct": "B",
+        "hint": "It's not the most famous city."
+    },
+    "Who wrote 'Romeo and Juliet'?": {
+        "options": {"A": "Shakespeare", "B": "Hemingway", "C": "Goethe", "D": "Schiller"},
+        "correct": "A",
+        "hint": "He also wrote Hamlet."
+    },
+    "What is the primary language spoken in Brazil?": {
+        "options": {"A": "Spanish", "B": "Barzilian", "C": "Portuguese", "D": "English"},
+        "correct": "C",
+        "hint": "It is different than in most Latin American countries!"
+    },
+    "You’re in a race and you pass the third place runner, what place are you in now?": {
+        "options": {"A": "Second", "B": "First", "C": "Third", "D": "Fourth"},
+        "correct": "C",
+        "hint": "Think about the number of people ahead of you."
+    }
+}
