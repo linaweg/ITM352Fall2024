@@ -1,0 +1,93 @@
+[
+    {
+        "id": 1,
+        "question": "How often do you experience stress in your daily life?",
+        "options": ["Often", "Every now and then", "Never"],
+        "area": "Personal",
+        "scores": [1, 0.5, 0]
+    },
+    {
+        "id": 2,
+        "question": "What is your biggest challenge when it comes to mental well-being?",
+        "options": ["Stress", "Anxiety", "Low self-esteem", "Other", "I don’t have any"],
+        "area": "Personal",
+        "scores": [1, 1, 1, 1, 0]
+    },
+    {
+        "id": 3,
+        "question": "Do you feel like you know your strengths and weaknesses?",
+        "options": ["Yes", "To some extent", "No"],
+        "area": "Personal",
+        "scores": [0, 0.5, 1]
+    },
+    {
+        "id": 4,
+        "question": "Do you feel satisfied with your current career path?",
+        "options": ["Yes", "No", "Not sure"],
+        "area": "Professional",
+        "scores": [0, 1, 0.5]
+    },
+    {
+        "id": 5,
+        "question": "How happy are you at your current occupation?",
+        "options": ["Very happy", "To some extent", "Not happy"],
+        "area": "Professional",
+        "scores": [0, 0.5, 1]
+    },
+    {
+        "id": 6,
+        "question": "What type of career resources would be most helpful to you?",
+        "options": ["Mentorship", "Resume tips", "Networking strategies", "Podcasts"],
+        "area": "Professional",
+        "scores": [0, 0, 0, 0]  
+    },
+    {
+        "id": 7,
+        "question": "Do you find it challenging to maintain interpersonal relations?",
+        "options": ["Very much", "To some extent", "No"],
+        "area": "Relational",
+        "scores": [1, 0.5, 0]
+    },
+    {
+        "id": 8,
+        "question": "Do you find it difficult to set boundaries with people in your life?",
+        "options": ["Yes", "Sometimes", "No"],
+        "area": "Relational",
+        "scores": [1, 0.5, 0]
+    },
+    {
+        "id": 9,
+        "question": "How comfortable are you seeking support from others when needed?",
+        "options": ["Very comfortable", "Somewhat comfortable", "Not comfortable"],
+        "area": "Relational",
+        "scores": [0, 0.5, 1]
+    },
+    {
+        "id": 10,
+        "question": "Do you feel represented in your community or workplace?",
+        "options": ["Yes", "No", "Somewhat"],
+        "area": "Societal",
+        "scores": [0, 1, 0.5]
+    },
+    {
+        "id": 11,
+        "question": "How much do you feel impacted by societal norms?",
+        "options": ["Very much", "To some extent", "Not at all"],
+        "area": "Societal",
+        "scores": [1, 0.5, 0]
+    },
+    {
+        "id": 12,
+        "question": "Do societal issues affect you?",
+        "options": ["Very much", "To some extent", "Not at all", "Don’t know"],
+        "area": "Societal",
+        "scores": [1, 0.5, 0, 0.5]
+    },
+    {
+        "id": 13,
+        "question": "What would help you feel more empowered in the face of societal challenges?",
+        "options": ["Stories of others like me", "Resources for advocacy", "Tools for self-empowerment"],
+        "area": "Societal",
+        "scores": [0, 0, 0]  
+    }
+]

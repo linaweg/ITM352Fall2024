@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Results</title>
+</head>
+<body>
+    <h1>Your Results</h1>
+    
+    <p><strong>Top Focus Area:</strong> {{ top_area }}</p>
+    
+    <p><strong>Recommendation:</strong> {{ recommendation }}</p>
+    
+    <form action="{{ url_for('recommendation') }}" method="get">
+        <label>
+            <input type="radio" name="choice" value="podcast" id="podcast"> Podcast
+        </label><br>
+        <label>
+            <input type="radio" name="choice" value="book" id="book"> Book
+        </label><br>
+        <label>
+            <input type="radio" name="choice" value="talking" id="talking"> Talking to someone
+        </label><br>
+        <button type="submit">Submit Recommendation</button>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
