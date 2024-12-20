@@ -1,33 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        img {
+            margin-top: 20px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <h1>Your Results</h1>
-    
-    <p><strong>Top Focus Area:</strong> {{ top_area }}</p>
-    
-    <p><strong>Recommendation:</strong> {{ recommendation }}</p>
-    
-    <form action="{{ url_for('recommendation') }}" method="get">
-        <label>
-            <input type="radio" name="choice" value="podcast" id="podcast"> Podcast
-        </label><br>
-        <label>
-            <input type="radio" name="choice" value="book" id="book"> Book
-        </label><br>
-        <label>
-            <input type="radio" name="choice" value="talking" id="talking"> Talking to someone
-        </label><br>
-        <button type="submit">Submit Recommendation</button>
+    <p>The area you should focus on the most is: <strong>{{ top_area }}</strong></p>
+
+    <h2>Scores</h2>
+    <ul>
+        {% for area, score in scores.items() %}
+            <li>{{ area }}: {{ score }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Recommended Resource</h2>
+    <p>{{ recommendation }}</p>
+
+    <h2>Focus Area Chart</h2>
+    <img src="{{ url_for('static', filename='focus_area_chart.png') }}" 
+         alt="Focus Area Chart" style="width: 400px;">
+
+    <form action="{{ url_for('home') }}">
+        <button type="submit">Take Quiz Again</button>
     </form>
 </body>
 </html>
-
-
 
 
 

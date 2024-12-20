@@ -1,16 +1,15 @@
-
 from flask import Flask, render_template, request, redirect, url_for, session
 import json
+import matplotlib.pyplot as plt
 import os
 
-###getting flask started 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-#getting the questions 
+
 def load_questions():
     try:
-        with open('questions.json', 'r') as file:
+        with open('/Users/linawegert/Documents/GitHub/Lab5.Dic/.venv/FinalTry4/questions.json', 'r') as file:
             return json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error loading questions: {e}")
@@ -18,33 +17,19 @@ def load_questions():
 
 questions = load_questions()
 
-###posdcast and book recommendations 
-podcasts = {
-    "Societal": "Reclaiming the Future",
-    "Relational": "The Relationship Blueprint",
-    "Professional": "Level Up: Career Conversations",
-    "Personal": "The Inner Compass"
-}
 
-books = {
-    "Societal": '"The Art of Gathering: How We Meet and Why It Matters" by Priya Parker',
-    "Relational": '"Attached: The New Science of Adult Attachment and How It Can Help You Find—and Keep—Love" by Amir Levine and Rachel Heller',
-    "Professional": '"So Good They Can\'t Ignore You: Why Skills Trump Passion in the Quest for Work You Love" by Cal Newport',
-    "Personal": '"Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones" by James Clear'
-}
+if not os.path.exists("/Users/linawegert/Documents/GitHub/Lab5.Dic/.venv/FinalTry4/static"):
+    os.makedirs("/Users/linawegert/Documents/GitHub/Lab5.Dic/.venv/FinalTry4/static")
 
-
-static_dir = os.path.join('static')
-if not os.path.exists(static_dir):
-    os.makedirs(static_dir)
 
 @app.route('/')
 def home():
     session['current_question'] = 0
     session['scores'] = {"Personal": 0, "Professional": 0, "Relational": 0, "Societal": 0}
-    return render_template('home.html')  # Adjust based on your home.html
+    
+    return render_template('/Users/linawegert/Documents/GitHub/Lab5.Dic/.venv/FinalTry4/templates/home.html')
 
-##starting the quiz with 0 and adding scores depending on which area 
+
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
     if 'current_question' not in session:
@@ -60,54 +45,75 @@ def quiz():
 
             
             if scores and area in session['scores']:
-                session['scores'][area] += scores[int(choice)]
+                session['scores'][area] += scores[int(choice)]  # Map choice index to score
 
-        session['current_question'] += 1
+        session['current_question'] += 1  # Move to the next question
 
+    
     if session['current_question'] >= len(questions):
-        return redirect(url_for('recommendation'))
+        # Full path for results.html redirection
+        return redirect('/Users/linawegert/Documents/GitHub/Lab5.Dic/.venv/FinalTry4/templates/results.html')
 
+    
     question = questions[session['current_question']]
-    return render_template('quiz.html', question=question, question_number=session['current_question'] + 1)
+    # Full path for quiz.html
+    return render_template('/Users/linawegert/Documents/GitHub/Lab5.Dic/.venv/FinalTry4/templates/quiz.html', question=question, question_number=session['current_question'] + 1)
 
-@app.route('/recommendation', methods=['GET', 'POST'])
-def recommendation():
+@app.route('/results')
+def results():
     scores = session.get('scores', {})
-
     if not scores:
-        return redirect(url_for('home'))
+        print("No scores found, redirecting to home.")
+        return redirect(url_for('home'))  # Redirect to home if no scores are found.
 
-    ###finding outt the top area 
+    print("Debug: Scores -", scores)  # Ensure scores are printed for debugging
+
+    # Check if session data exists
     top_area = max(scores, key=scores.get) if scores else "None"
+
+    try:
+        
+        chart_path = os.path.join(app.root_path, "static", "focus_area_chart.png")
+        print("Debug: Saving chart to ->", chart_path)
+
+        plt.figure(figsize=(6, 4))
+        plt.bar(scores.keys(), scores.values(), color=['#FF5733', '#33C1FF', '#75FF33', '#FF33A6'])
+        plt.title("Your Focus Areas")
+        plt.xlabel("Areas")
+        plt.ylabel("Points")
+        plt.tight_layout()
+        plt.savefig(chart_path)
+        plt.close()
+
+        if not os.path.exists(chart_path):
+            print("Error: Chart file not created.")
+            return "Error: Chart could not be generated.", 500
+    except Exception as e:
+        print("Error while generating chart:", e)
+        return "Error while generating chart.", 500
+
+
+    recommendations = {
+        "Personal": "We recommend 'The Inner Compass' podcast for personal growth.",
+        "Professional": "Check out 'Level Up: Career Conversations' podcast for career advancement.",
+        "Relational": "Listen to 'The Relationship Blueprint' for improving relationships.",
+        "Societal": "Try 'Reclaiming the Future' for societal empowerment resources."
+    }
+    recommendation = recommendations.get(top_area, "Explore resources that suit your needs.")
+
+    print("Debug: Top Area -", top_area)
+    print("Debug: Recommendation -", recommendation)
+
     
-    
-    recommendation_choice = request.args.get('choice', '')
-
-    ###recommendation variable 
-    recommendation = "Please select a valid option."
-
-    if recommendation_choice == 'podcast':
-        recommendation = podcasts.get(top_area, "Explore podcasts that suit your needs.")
-    elif recommendation_choice == 'book':
-        recommendation = books.get(top_area, "Explore books that suit your needs.")
-    elif recommendation_choice == 'talking':
-        if top_area == "Societal":
-            recommendation = "It might help you to talk about your ideas and perspectives of society with someone."
-        elif top_area == "Relational":
-            recommendation = "It might help you to talk about your relations with someone."
-        elif top_area == "Professional":
-            recommendation = "It might help you to talk about your ideas, goals, and perspectives about your career with someone."
-        elif top_area == "Personal":
-            recommendation = "It might help you to talk about your ideas, problems, and perspectives of your personal life with someone."
-
-    return render_template('results.html', top_area=top_area, recommendation=recommendation)
+    return render_template(
+        '/Users/linawegert/Documents/GitHub/Lab5.Dic/.venv/FinalTry4/templates/results.html',
+        scores=scores,
+        top_area=top_area,
+        chart=url_for('static', filename='focus_area_chart.png'),
+        recommendation=recommendation
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-
 
 
